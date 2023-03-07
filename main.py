@@ -42,7 +42,7 @@ except Exception as e:
     toast('Error no 1 occured')
     
 try:
-    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.SET_WALLPAPER])
 except Exception as Argument:
     toast('Error no 2 occured')
 
@@ -78,7 +78,7 @@ SignupPage()
 from tasks import TasksPage
 TasksPage()
 
-
+from os.path import join, dirname
         
 class MainApp(MDApp):
     def build(self):   
@@ -99,6 +99,5 @@ class MainApp(MDApp):
         self.sm.add_widget(SignupPage(name='signupp'))
         
         return self.sm
-
         
 MainApp().run()

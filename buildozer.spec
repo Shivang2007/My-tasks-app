@@ -7,7 +7,7 @@ title = My Tasks
 package.name = mytasks
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = org.tasks
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,pillow,kivymd,certifi,android,plyer
+requirements = python3,kivy,pillow,kivymd,certifi,android,plyer,pyjnius,six, https://github.com/kvdroid/Kvdroid/archive/refs/heads/master.zip
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -93,7 +93,7 @@ android.presplash_color = #F44AE9
 #icon.adaptive_background.filename = %(source.dir)s/data/icon_bg.png
 
 # (list) Permissions
-android.permissions = READ_EXTERNAL_STORAGE,MANAGE_EXTERNAL_STORAGE
+android.permissions = READ_EXTERNAL_STORAGE,MANAGE_EXTERNAL_STORAGE,SET_WALLPAPER
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host

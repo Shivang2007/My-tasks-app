@@ -69,7 +69,8 @@ class TasksPage(Screen):
             loc = f.read()
             
         menu_items = [
-            {"viewclass": "OneLineListItem","text": f"Color All Tasks","height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)}
+            {"viewclass": "OneLineListItem","text": f"Color All Tasks","height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)},
+            {"viewclass": "OneLineListItem","text": f"Set Wallpaper","height": dp(56),"on_release": self.set_wallpaper}
          ]
          
         if os.path.exists(f"{MP}/{loc}/super_label.color"):
@@ -144,6 +145,19 @@ class TasksPage(Screen):
         except Exception as e:
             toast(f'{e}')
     
+    def set_wallpaper(self):
+        try:
+            file_path = '/storage/emulated/0/My Tasks/wallpaper.png'
+            self.ids.flist.export_to_png(file_path)
+            try:
+                from kvdroid.tools import set_wallpaper
+                set_wallpaper(file_path)
+            except Exception as e:
+                toast(f'Unable to set wallpaper {e}')
+        except Exception as e:
+            toast('Unable to set wallpaper')
+            
+            
     def open(self, inst):
         tin = inst
         bottom_sheet_menu = MDListBottomSheet()

@@ -121,10 +121,9 @@ class TasksPage(Screen):
                 sldata = sldata.split('&&&&')
                 sll = sldata[0]
                 sld = sldata[-1]
-                self.card = MDCard(orientation='vertical',size_hint=(None,None),height="300",width=Window.width,md_bg_color="#4d94ff")
+                self.card = MDCard(orientation='vertical',size_hint=(None,None),height="300",width=Window.width-40,md_bg_color="#4d94ff")
                 self.card.add_widget(MDLabel(text=f'{sll}',font_style='H4',bold=True,underline=True,halign='center'))
-                self.card.add_widget(MDLabel(text=f'{sld}',font_style='Body1',bold=True,halign='center'))
-                             
+                self.card.add_widget(MDLabel(text=f'{sld}',font_style='Body1',bold=True,halign='center'))             
                 self.ids.flist.add_widget(self.card)            
             
             for task in lst:
@@ -152,6 +151,7 @@ class TasksPage(Screen):
             try:
                 from kvdroid.tools import set_wallpaper
                 set_wallpaper(file_path)
+                toast('Done')
             except Exception as e:
                 toast(f'Unable to set wallpaper {e}')
         except Exception as e:

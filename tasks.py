@@ -71,7 +71,8 @@ class TasksPage(Screen):
         menu_items = [
             {"viewclass": "OneLineListItem","text": f"Color All Tasks","height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)},
             {"viewclass": "OneLineListItem","text": f"Set Wallpaper","height": dp(56),"on_release": self.set_wallpaper},
-            {"viewclass": "OneLineListItem","text": f"Send Tasks","height": dp(56),"on_release": self.send_tasks}
+            {"viewclass": "OneLineListItem","text": f"Send Tasks Text","height": dp(56),"on_release": self.send_tasks},
+            {"viewclass": "OneLineListItem","text": f"Send Tasks Image","height": dp(56),"on_release": self.send_image}
          ]
          
         if os.path.exists(f"{MP}/{loc}/super_label.color"):
@@ -145,6 +146,12 @@ class TasksPage(Screen):
         except Exception as e:
             toast(f'{e}')
     
+    def send_image(self):
+        file_path = '/storage/emulated/0/My Tasks/wallpaper.png'
+        self.ids.flist.export_to_png(file_path)
+        from kvdroid.tools import share_file
+        share_file(file_path, title='Share', chooser=False, app_package=None,call_playstore=False, error_msg="application unavailable")
+        
     def set_wallpaper(self):
         try:
             file_path = '/storage/emulated/0/My Tasks/wallpaper.png'

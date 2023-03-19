@@ -70,7 +70,8 @@ class TasksPage(Screen):
             
         menu_items = [
             {"viewclass": "OneLineListItem","text": f"Color All Tasks","height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)},
-            {"viewclass": "OneLineListItem","text": f"Set Wallpaper","height": dp(56),"on_release": self.set_wallpaper}
+            {"viewclass": "OneLineListItem","text": f"Set Wallpaper","height": dp(56),"on_release": self.set_wallpaper},
+            {"viewclass": "OneLineListItem","text": f"Send Tasks","height": dp(56),"on_release": self.send_tasks}
          ]
          
         if os.path.exists(f"{MP}/{loc}/super_label.color"):
@@ -156,8 +157,7 @@ class TasksPage(Screen):
                 toast(f'Unable to set wallpaper {e}')
         except Exception as e:
             toast('Unable to set wallpaper')
-            
-            
+                 
     def open(self, inst):
         tin = inst
         bottom_sheet_menu = MDListBottomSheet()
@@ -169,11 +169,36 @@ class TasksPage(Screen):
         bottom_sheet_menu.add_item(f"Highlight Red",lambda x ,y = tin: self.hl_task('#ff6666',fname))
         bottom_sheet_menu.add_item(f"Remove Highlight",lambda x ,y = tin: self.hl_task('white',fname))
         bottom_sheet_menu.add_item(f"Make it a Label",lambda x ,y = tin: self.label_task(fname))
-        bottom_sheet_menu.add_item(f"Notify It",lambda x ,y = tin: self.notify_it(fname))
+        bottom_sheet_menu.add_item(f"Notify It",lambda x ,y = tin: self.notify_it(fname)) 
+        bottom_sheet_menu.open()
         
-        bottom_sheet_menu.open()     
-
-    
+    def send_tasks(self):
+        with open('texts/main_path.txt','r') as f:
+            MP = f.read()
+        with open('path.txt','r') as f:
+            loc = f.read()
+        lst = os.listdir(f'{MP}/{loc}/')
+        self.ids.tbar.title = f'{loc}'
+        if 'color.color' in lst:
+            lst.remove('color.color')   
+        if 'desc.color' in lst:
+            lst.remove('desc.color')   
+        if 'time.color' in lst:
+            lst.remove('time.color')   
+        if 'super_label.color' in lst:
+            lst.remove('super_label.color')
+        text = f'{loc}\n\n'
+        n = 0
+        for file in lst:
+            n = n + 1
+            file = file.replace('.txt','')
+            text = f"{text}{n}. {file}\n"
+        try:
+            from kvdroid.tools import share_text
+            share_text(text, title="Share", chooser=False, app_package=None,call_playstore=False, error_msg="application unavailable")
+        except:
+            toast('Unable to send report')
+        
     def notify_it(self, task):
         try:
             from plyer import notification

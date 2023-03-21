@@ -46,7 +46,7 @@ try:
 except Exception as Argument:
     toast('Error no 2 occured')
 
-files = ['/storage/emulated/0/My Tasks/Tasks/','Tasks/','texts/']
+files = ['/storage/emulated/0/Documents/My Tasks/Tasks/','Tasks/','texts/']
 
 for file in files:
     try:
@@ -59,7 +59,7 @@ for file in files:
     
     
 if not os.path.exists('show_safe.txt'):
-    MP = '/storage/emulated/0/My Tasks/Tasks'
+    MP = '/storage/emulated/0/Documents/My Tasks/Tasks'
 elif os.path.exists('texts/logined.txt'):
     with open('texts/main_path.txt','r') as f:
         MP = f.read()
@@ -69,11 +69,14 @@ else:
 with open('texts/main_path.txt','w') as f:
     f.write(MP)
 
-
 from category import Categories, LoginPage, SignupPage
 Categories()
 LoginPage()
 SignupPage()
+
+from bills import BillPage, BillListPage
+BillPage()
+BillListPage()
 
 from tasks import TasksPage
 TasksPage()
@@ -82,10 +85,20 @@ from os.path import join, dirname
         
 class MainApp(MDApp):
     def build(self):   
-        self.theme_cls.theme_style_switch_animation = True       
-        self.theme_cls.primary_palette = f"Indigo"
+        self.theme_cls.theme_style_switch_animation = True
+        try:
+            if os.path.exists('/storage/emulated/0/Documents/My Tasks/Tasks/theme.txt'):
+                with open('/storage/emulated/0/Documents/My Tasks/Tasks/theme.txt','r') as f:
+                    self.theme_cls.primary_palette = f.read()
+            else:
+                self.theme_cls.primary_palette = 'Blue'
+        except:
+            self.theme_cls.primary_palette = f"Blue"
+            
         set_bars_colors(self.theme_cls.primary_color, self.theme_cls.primary_color,"Light")
         self.theme_cls.theme_style = "Light"
+        
+        Builder.load_file('dbox.kv')
         
         self.sm=ScreenManager()
         if os.path.exists('path.txt'):
@@ -97,6 +110,8 @@ class MainApp(MDApp):
             
         self.sm.add_widget(LoginPage(name='loginp'))         
         self.sm.add_widget(SignupPage(name='signupp'))
+        self.sm.add_widget(BillListPage(name='billlistp'))
+        self.sm.add_widget(BillPage(name='billp'))
         
         return self.sm
         

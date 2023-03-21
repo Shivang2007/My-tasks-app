@@ -467,6 +467,9 @@ class Categories(Screen):
         
     def exit(self):
         sys.exit()
+    
+    def goto(self, where):
+        self.manager.current = where
         
         
 class LoginPage(Screen):

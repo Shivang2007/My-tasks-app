@@ -1,0 +1,113 @@
+
+
+<NewFolderBox>:
+    orientation:'vertical'
+    size_hint_y:None
+    height:'110dp'
+    
+    MDTextField:
+        hint_text:'Folder Name'
+        required:True
+        multiline:False
+        text:'New Folder'
+        id:cname
+        text_color_focus:'red'
+    
+    MDTextField:
+        hint_text:'Folder Description'
+        required:True
+        multiline:False
+        text:'Folder'
+        id:descname
+        text_color_focus:'red'
+        
+
+<LabelBox>:
+    orientation:'vertical'
+    size_hint_y:None
+    height:'70dp'
+    
+    MDTextField:
+        hint_text:'Label Description'
+        required:True
+        multiline:False
+        text:'Note'
+        id:cname
+        text_color_focus:'red'
+        
+<SuperLabelBox>:
+    orientation:'vertical'
+    size_hint_y:None
+    height:'110dp'
+    
+    MDTextField:
+        hint_text:'Label Text'
+        required:True
+        multiline:False
+        id:cname
+        text_color_focus:'red'
+    
+    MDTextField:
+        hint_text:'Label Description'
+        required:True
+        multiline:False
+        id:descname
+        text_color_focus:'red'
+        
+        
+<NotifyBox>:
+    orientation:'vertical'
+    size_hint_y:None
+    height:'190dp'
+    
+    MDLabel:
+        text:'Type the name of colour you choose to represent tasks that have been completed'
+        
+    MDLabel:
+        text:'Availabel colours are:\n(Blue, Red, Yellow, Green, White)'
+        
+    MDTextField:
+        hint_text:'Colour of task done'
+        required:True
+        multiline:False
+        text:'Blue'
+        id:colourn
+        text_color_focus:'red'
+
+
+
+<MakeListBox>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "150dp"
+    
+    MDTextField:
+        id:item_name
+        multiline:False
+        hint_text:'item'
+        text:''
+    
+    MDTextField:
+        id:quan
+        multiline:False
+        hint_text:'item Quantity'
+        text:''
+
+<MakeNewBillBox>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "150dp"
+    
+    MDTextField:
+        id:nam
+        multiline:False
+        hint_text:'Name of bill'
+        text:'New Bill'
+    
+    MDTextField:
+        id:desc
+        multiline:False
+        hint_text:'Description'
+        text:'new bill'

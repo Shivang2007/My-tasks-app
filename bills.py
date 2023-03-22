@@ -213,15 +213,16 @@ class BillPage(Screen):
             for item in data[bill]['items']:
                 if data[bill]['items'][item]['status'] == 'Left':
                     quan = data[bill]['items'][item]['quantity'] 
-                    self.ids.flist.add_widget(OneLineListItem(text=f"{quan} - {item}",bg_color=Red,on_release=lambda x : self.open(item)))
+                    self.ids.flist.add_widget(OneLineListItem(text=f"{quan} - {item}",bg_color=Red,on_release=self.open))
                 else:
                     quan = data[bill]['items'][item]['quantity'] 
-                    self.ids.flist.add_widget(OneLineListItem(text=f"{quan} - {item}",bg_color=Green,on_release=lambda x : self.open(item)))
+                    self.ids.flist.add_widget(OneLineListItem(text=f"{quan} - {item}",bg_color=Green,on_release=self.open))
     
     def add_item_indir(self, inst):
         self.add_item()
         
     def open(self, fname):
+        fname = fname.text.split(' - ')[-1]
         bottom_sheet_menu = MDListBottomSheet()
         bottom_sheet_menu.add_item(f"Update Status",lambda x : self.update(fname))
         bottom_sheet_menu.add_item(f"Delete Item",lambda x : self.dele(fname))
@@ -275,15 +276,18 @@ class BillPage(Screen):
             with open('texts/bill.txt','r') as f:
                 bill = f.read()
             data= get_data(BillPath)
-            if item_name in data:
-                data[bill]['items'][str(item_name)] = {'quantity':str(quan),'status':'Left'}
-                toast('Data changed')
+            if '-' in item_name:
+                toast("Do not use '-' in the item name")
             else:
-                data[bill]['items'][str(item_name)] = {'quantity':str(quan),'status':'Left'}       
-                Snackbar(text=f'{quan} - {item_name} Added To Bill',bg_color='blue').open()
-            write_data(BillPath, data)
-            self.enter()
-            self.add_dia.dismiss()
+                if item_name in data:
+                    data[bill]['items'][str(item_name)] = {'quantity':str(quan),'status':'Left'}
+                    toast('Data changed')
+                else:
+                    data[bill]['items'][str(item_name)] = {'quantity':str(quan),'status':'Left'}       
+                    Snackbar(text=f'{quan} - {item_name} Added To Bill',bg_color='blue').open()
+                write_data(BillPath, data)
+                self.enter()
+                self.add_dia.dismiss()
         except:
             toast('Oops an error occured')
         

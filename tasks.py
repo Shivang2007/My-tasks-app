@@ -69,16 +69,17 @@ class TasksPage(Screen):
             loc = f.read()
             
         menu_items = [
-            {"viewclass": "OneLineListItem","text": f"Color All Tasks","height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)},
-            {"viewclass": "OneLineListItem","text": f"Set Wallpaper","height": dp(56),"on_release": self.set_wallpaper},
-            {"viewclass": "OneLineListItem","text": f"Send Tasks Text","height": dp(56),"on_release": self.send_tasks},
-            {"viewclass": "OneLineListItem","text": f"Send Tasks Image","height": dp(56),"on_release": self.send_image}
+            {"viewclass": "OneLineListItem","text": f"Color All Tasks",'bg_color':'yellow',"height": dp(56),"on_release": lambda x=f"colorall": self.menu_callback(x)},
+            {"viewclass": "OneLineListItem","text": f"Set Wallpaper",'bg_color':'#33adff',"height": dp(56),"on_release": self.set_wallpaper},
+            {"viewclass": "OneLineListItem","text": f"Send Tasks Text",'bg_color':'#33adff',"height": dp(56),"on_release": self.send_tasks},
+            {"viewclass": "OneLineListItem","text": f"Send Tasks Image",'bg_color':'#33adff',"height": dp(56),"on_release": self.send_image},
+            {"viewclass": "OneLineListItem","text": f"Remove All Tasks",'bg_color':'red',"height": dp(56),"on_release": self.rm_all}
          ]
          
         if os.path.exists(f"{MP}/{loc}/super_label.color"):
-            menu_items.append({"viewclass": "OneLineListItem","text": f"Remove Super Label","height": dp(56),"on_release": lambda x=f"rsl": self.menu_callback(x)})
+            menu_items.append({"viewclass": "OneLineListItem","text": f"Remove Super Label",'bg_color':'red',"height": dp(56),"on_release": lambda x=f"rsl": self.menu_callback(x)})
         elif not os.path.exists(f"{MP}/{loc}/super_label.color"):
-            menu_items.append({"viewclass": "OneLineListItem","text": f"Make Super Label","height": dp(56),"on_release": lambda x=f"msl": self.menu_callback(x)})
+            menu_items.append({"viewclass": "OneLineListItem","text": f"Make Super Label",'bg_color':'red',"height": dp(56),"on_release": lambda x=f"msl": self.menu_callback(x)})
         else:
             pass
         
@@ -86,11 +87,11 @@ class TasksPage(Screen):
             with open(f"texts/notify.txt",'r') as f:
                 np = f.read()
             if np == f"{MP}/{loc}":
-                menu_items.append({"viewclass": "OneLineListItem","text": f"Remove Notify","height": dp(56),"on_release": lambda x=f"rnme": self.menu_callback(x)})
+                menu_items.append({"viewclass": "OneLineListItem","text": f"Remove Notify",'bg_color':'red',"height": dp(56),"on_release": lambda x=f"rnme": self.menu_callback(x)})
             else:
-                menu_items.append({"viewclass": "OneLineListItem","text": f"Notify Me","height": dp(56),"on_release": lambda x=f"nme": self.menu_callback(x)})
+                menu_items.append({"viewclass": "OneLineListItem","text": f"Notify Me",'bg_color':'red',"height": dp(56),"on_release": lambda x=f"nme": self.menu_callback(x)})
         elif not os.path.exists(f"texts/notify.txt"):
-            menu_items.append({"viewclass": "OneLineListItem","text": f"Notify Me","height": dp(56),"on_release": lambda x=f"nme": self.menu_callback(x)})
+            menu_items.append({"viewclass": "OneLineListItem","text": f"Notify Me",'bg_color':'red',"height": dp(56),"on_release": lambda x=f"nme": self.menu_callback(x)})
         else:
             pass
             
@@ -146,8 +147,30 @@ class TasksPage(Screen):
         except Exception as e:
             toast(f'{e}')
     
+    def rm_all(self):
+        self.label_dia = MDDialog(
+        title="Remove All Tasks ?",
+        width=Window.width,
+        text='Do you really want to remove all the tasks ?',
+        buttons=[
+            MDFlatButton(text="Cancel",on_release=self.label_cancel),
+            MDRaisedButton(text="Remove All",md_bg_color='red',on_release= lambda *args: self.remove_all_tasks(*args))])
+        self.label_dia.open()  
+    
+    def remove_all_tasks(self, inst):
+        with open('texts/main_path.txt','r') as f:
+            MP = f.read()
+        with open('path.txt','r') as f:
+            loc = f.read()        
+        lst = os.listdir(os.path.join(MP,loc))
+        for file in lst:
+            os.remove(f'{MP}/{loc}/{file}')
+        toast('All The Tasks Removed')
+        self.makehome()
+        self.label_dia.dismiss()
+        
     def send_image(self):
-        file_path = '/storage/emulated/0/Pictures/wallpaper.png'
+        file_path = '/storage/emulated/0/My Tasks/wallpaper.png'
         self.ids.flist.export_to_png(file_path)
         from kvdroid.tools import share_file
         share_file(file_path, title='Share', chooser=False, app_package=None,call_playstore=False, error_msg="application unavailable")

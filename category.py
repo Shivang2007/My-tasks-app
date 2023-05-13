@@ -262,7 +262,7 @@ class Categories(Screen):
             
         elif item == 'nosafe':
             os.remove('show_safe.txt')
-            MP = '/storage/emulated/0/Documents/My Tasks/Tasks'
+            MP = '/storage/emulated/0/My Tasks/Tasks'
             with open('texts/main_path.txt','w') as f:
                 f.write(MP)
             Snackbar(text='Your tasks are now public').open()

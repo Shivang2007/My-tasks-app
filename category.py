@@ -72,7 +72,9 @@ class Categories(Screen):
         back_no = 0
         menu_items = [
             {"viewclass": "OneLineListItem","text": f"Exit","height": dp(56),"on_release": lambda x=f"exit": self.menu_callback(x)},
-            {"viewclass": "OneLineListItem","text": f"Todays Tasks Template","height": dp(56),"on_release": lambda x=f"toadytask": self.menu_callback(x)}
+            {"viewclass": "OneLineListItem","text": f"Todays Tasks Template","height": dp(56),"on_release": lambda x=f"toadytask": self.menu_callback(x)},
+            {"viewclass": "OneLineListItem","text": f"Messages","height": dp(56),"on_release": lambda x=f"sms": self.menu_callback(x)},
+            {"viewclass": "OneLineListItem","text": f"Important Messages","height": dp(56),"on_release": lambda x=f"impsms": self.menu_callback(x)}
          ]
         if os.path.exists('show_time.txt'):
             menu_items.append({"viewclass": "OneLineListItem","text": f"Hide Time","height": dp(56),"on_release": lambda x=f"notime": self.menu_callback(x)})
@@ -242,6 +244,12 @@ class Categories(Screen):
         item = str(item)
         if item == 'exit':
             sys.exit()
+        elif item == 'sms':
+            self.manager.current = 'viewsmsp'
+            
+        elif item == 'impsms':
+            self.manager.current = 'impsmsp'
+            
         elif item == 'notime':
             os.remove('show_time.txt')
             self.enter()
@@ -262,7 +270,7 @@ class Categories(Screen):
             
         elif item == 'nosafe':
             os.remove('show_safe.txt')
-            MP = '/storage/emulated/0/My Tasks/Tasks'
+            MP = '/storage/emulated/0/Documents/My Tasks/Tasks'
             with open('texts/main_path.txt','w') as f:
                 f.write(MP)
             Snackbar(text='Your tasks are now public').open()

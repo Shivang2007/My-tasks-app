@@ -171,3 +171,35 @@
         pos_hint: {"center_x": .85, "center_y": .1}
         on_release:
             root.add_item()
+            
+<ViewMessage>:
+    on_enter:root.enter()
+    MDBoxLayout:
+        orientation:'vertical'
+        MDTopAppBar:
+            id:tbar
+            title:'Messages'
+            #left_action_items: [["dots-vertical", lambda x: root.menu_open(x)]]
+            right_action_items: [['keyboard-backspace', lambda x: root.goto('mainp')]]
+            
+        ScrollView:
+            MDList:
+                id: flist
+                padding: 20,50
+                spacing: 0,20
+                
+<ImpMessage>:
+    on_enter:root.enter()
+    MDBoxLayout:
+        orientation:'vertical'
+        MDTopAppBar:
+            id:tbar
+            title:'Important Messages'
+            #left_action_items: [["dots-vertical", lambda x: root.menu_open(x)]]
+            right_action_items: [['keyboard-backspace', lambda x: root.goto('mainp')]]
+            
+        ScrollView:
+            MDList:
+                id: flist
+                padding: 20,50
+                spacing: 0,20

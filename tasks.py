@@ -163,6 +163,14 @@ class TasksPage(Screen):
         with open('path.txt','r') as f:
             loc = f.read()        
         lst = os.listdir(os.path.join(MP,loc))
+        if 'color.color' in lst:
+            lst.remove('color.color')   
+        if 'desc.color' in lst:
+            lst.remove('desc.color')   
+        if 'time.color' in lst:
+            lst.remove('time.color')   
+        if 'super_label.color' in lst:
+            lst.remove('super_label.color')
         for file in lst:
             os.remove(f'{MP}/{loc}/{file}')
         toast('All The Tasks Removed')

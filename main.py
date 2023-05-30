@@ -42,7 +42,7 @@ except Exception as e:
     toast('Error no 1 occured')
     
 try:
-    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.SET_WALLPAPER])
+    request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE,Permission.READ_SMS,Permission.SET_WALLPAPER])
 except Exception as Argument:
     toast('Error no 2 occured')
 
@@ -78,6 +78,7 @@ from bills import BillPage, BillListPage
 BillPage()
 BillListPage()
 
+from message import ViewMessage , ImpMessage
 from tasks import TasksPage
 TasksPage()
 
@@ -112,6 +113,8 @@ class MainApp(MDApp):
         self.sm.add_widget(SignupPage(name='signupp'))
         self.sm.add_widget(BillListPage(name='billlistp'))
         self.sm.add_widget(BillPage(name='billp'))
+        self.sm.add_widget(ImpMessage(name='impsmsp'))
+        self.sm.add_widget(ViewMessage(name='viewsmsp'))
         
         return self.sm
         
